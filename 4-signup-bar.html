@@ -1,0 +1,21 @@
+{% if site.has_signup_page? %}
+
+<style type="text/css">
+  .signup-bar {
+    background: lightblue;
+  }
+</style>
+
+<section class="signup-bar clearfix py-4">
+  <div class="container text-center">
+    {% if request.sorta_logged_in? or request.logged_in? %}
+      <h1>Thanks for joining!</h1>
+      {% subpage site.signup_page.slug with "horizontal_signup_form" %}
+    {% else %}
+      <h1 class="pb-3">Sign up for updates!</h1>
+      {% subpage site.signup_page.slug with "horizontal_signup_form" %}
+    {% endif %}
+  </div>
+</section>
+
+{% endif %}
