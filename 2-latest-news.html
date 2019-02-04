@@ -1,0 +1,65 @@
+{% if site.most_recent_blog_post_pages.size > 0 %}
+
+<style type="text/css">
+  .latest-news-section {
+    background: mintcream;
+  }
+  .post-thumbnail {
+    width: 75%;
+  }
+  .small {
+    font-size: 12px;
+  }
+</style>
+
+<section class="latest-news-section clearfix py-4">
+  <div class="container text-center">
+
+    <h1 class="mb-4">Latest News</h1>
+
+    <div class="row">
+      {% for post in site.most_recent_blog_post_pages | limit:3 %}
+        {% if forloop.first %}
+          {% assign main_blog = post.parent %}
+        {% endif %}
+        <div class="col-sm-4 py-4">
+          <div class="post-column">
+
+            {% if post.has_meta_image? %}
+            <a href="{{ post.url }}">
+              <img src="{{ post.meta_image_url }}" title="{{ post.name }}" alt="{{ post.name }}" class="post-thumbnail" />
+            </a>
+            {% endif %}
+
+            <div class="pt-3">
+              {% if post.headline.size > 0 %}
+              <a href="{{ post.url }}">
+                <h4>
+                  <strong>{{ post.headline }}</strong>
+                </h4>
+              </a>
+              {% endif %}
+              <p class="small mb-0">
+                {{ post.published_at | date: '%B %d, %Y' }}
+              </p>
+            </div>
+
+            {% if post.blog_post.content.size > 0 %}
+            <p class="post-excerpt pt-2">
+              {{ post.blog_post.content | strip_html | truncatewords:24 }}
+            </p>
+            {% endif %}
+
+            <div class="pt-3">
+              <a href="{{ post.url }}" class="btn btn-primary btn-xs">View More</a>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <a href="{{ main_blog.url }}" class="btn-default btn-lg">Visit {{ main_blog.name }}</a>
+  </div>
+</section>
+
+{% endif %}
